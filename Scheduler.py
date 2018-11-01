@@ -30,19 +30,12 @@ def fillScheduleWithClassList(classList):
 	return scheduleList
 
 def printScheduleList(scheduleList, numClasses, imperativeList):
-	if len(imperativeList) == 0:
-		for i in range(0, len(scheduleList)):
-			if numClasses == 0 or len(scheduleList[i]) == numClasses:
+	for i in range(0, len(scheduleList)):
+		if numClasses == 0 or len(scheduleList[i]) == numClasses:
+			if contains(scheduleList[i], imperativeList) or len(imperativeList) == 0:
 				for j in range(0, len(scheduleList[i])):
 					print(scheduleList[i][j].name, end = " ")
 				print()
-	else:
-		for i in range(0, len(scheduleList)):
-			if numClasses == 0 or len(scheduleList[i]) == numClasses:
-				if contains(scheduleList[i], imperativeList):
-					for j in range(0, len(scheduleList[i])):
-						print(scheduleList[i][j].name, end = " ")
-					print()
 
 def generateSchedules(scheduleList, classList):
 	i = 0
