@@ -4,16 +4,18 @@ from node import *
 from MergeSort import merge_sort
 
 #def scheduler(inFile, outFile):
-def scheduler(inFile = "inFile", numClasses = 0):
+def scheduler(numClasses = 0, inFile = "inFile"):
 	inputFile = open(inFile, "r")
 	fileText = inputFile.read()
 	inputFile.close()
 	#outputFile = open(outFile, "w")
 
-	classList = convertTimesToInts(parse(fileText))
+	initClassList = parse(fileText)
+	imperativeList = initClassList[1]
+	classList = convertTimesToInts(initClassList[0])
 	scheduleList = generateSchedules(fillScheduleWithClassList(classList), classList)
 
-	printScheduleList(scheduleList, numClasses)
+	printScheduleList(scheduleList, numClasses, imperativeList)
 
 	#timeList = getTimeList(classList)
 
@@ -27,18 +29,20 @@ def fillScheduleWithClassList(classList):
 		scheduleList.append([newnode])
 	return scheduleList
 
-def printScheduleList(scheduleList, numClasses):
-	if numClasses == 0:
+def printScheduleList(scheduleList, numClasses, imperativeList):
+	if len(imperativeList) == 0:
 		for i in range(0, len(scheduleList)):
-			for j in range(0, len(scheduleList[i])):
-				print(scheduleList[i][j].name, end = " ")
-			print()
-	else:
-		for i in range(0, len(scheduleList)):
-			if len(scheduleList[i]) == numClasses:
+			if numClasses == 0 or len(scheduleList[i]) == numClasses:
 				for j in range(0, len(scheduleList[i])):
 					print(scheduleList[i][j].name, end = " ")
 				print()
+	else:
+		for i in range(0, len(scheduleList)):
+			if numClasses == 0 or len(scheduleList[i]) == numClasses:
+				if contains(scheduleList[i], imperativeList):
+					for j in range(0, len(scheduleList[i])):
+						print(scheduleList[i][j].name, end = " ")
+					print()
 
 def generateSchedules(scheduleList, classList):
 	i = 0
@@ -78,7 +82,6 @@ def checkDuplicates(list1, list2): # returns 0 if there is a duplicate and 1 if 
 				j += 1
 		i += 1
 	return 1
-
 
 def checkConflict(class1, class2, classList): # returns a 1 if there is a conflict, a 0 if none
 	if classList[class1][1] == classList[class2][1]: # if starttimes are equal

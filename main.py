@@ -19,8 +19,8 @@ if len(sys.argv) > 3:
 	print("Too many parameters supplied")
 elif len(sys.argv) >= 2:
 	if len(sys.argv) == 3:
-		scheduler(sys.argv[1], int(sys.argv[2]))
+		scheduler(int(sys.argv[1]), sys.argv[2])
 	else:
-		scheduler(sys.argv[1])
+		scheduler(int(sys.argv[1]))
 else:
 	scheduler()
