@@ -13,6 +13,7 @@
 import sys
 
 from StringToken import stringToken
+from MergeSort import merge_sort
 
 #def scheduler(inFile, outFile):
 def scheduler(inFile):
@@ -74,7 +75,7 @@ def generateSchedules(scheduleList, classList): # this is messed up
 		j = i + 1
 		while j < len(scheduleList):
 			if checkLists(scheduleList[i], scheduleList[j], classList) == 1:
-				scheduleList.append(scheduleList[i] + scheduleList[j])
+				scheduleList.append(merge_sort(scheduleList[i] + scheduleList[j]))
 			j += 1
 		i += 1
 	return removeDuplicates(scheduleList)
@@ -126,7 +127,7 @@ def removeDuplicates(scheduleList):
 	while i < len(scheduleList):
 		j = i + 1
 		while j < len(scheduleList):
-			
+
 
 class node:
 	def __init__(self, name, index):
