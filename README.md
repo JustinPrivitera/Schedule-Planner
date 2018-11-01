@@ -2,7 +2,8 @@
 A replacement for PASS.
 INCOMPLETE
 
-run with the following command: "python3 main.py inFile"
+run with the following command: "python3 main.py <inFile> <numClasses>"
+both of the parameters are optional
 
 for now, it has basic functionality, and runs with no errors.
 still need to add:
@@ -10,5 +11,4 @@ still need to add:
 	- a method of putting in classes as either/or - this could be accomplished by simply limiting the output to the number of classes one wishes to take
 	- add output file functionality
 	- format the results in a way that is conducive to schedule planning
-		- i.e. make it so one can choose a number of classes to display
 		- you can choose a class or classes to be imperative, meaning that only schedules containing that class can be displayed

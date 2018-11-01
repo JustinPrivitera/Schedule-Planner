@@ -4,7 +4,7 @@ from node import *
 from MergeSort import merge_sort
 
 #def scheduler(inFile, outFile):
-def scheduler(inFile):
+def scheduler(inFile = "inFile", numClasses = 0):
 	inputFile = open(inFile, "r")
 	fileText = inputFile.read()
 	inputFile.close()
@@ -13,7 +13,7 @@ def scheduler(inFile):
 	classList = convertTimesToInts(parse(fileText))
 	scheduleList = generateSchedules(fillScheduleWithClassList(classList), classList)
 
-	printScheduleList(scheduleList)
+	printScheduleList(scheduleList, numClasses)
 
 	#timeList = getTimeList(classList)
 
@@ -27,11 +27,18 @@ def fillScheduleWithClassList(classList):
 		scheduleList.append([newnode])
 	return scheduleList
 
-def printScheduleList(scheduleList):
-	for i in range(0, len(scheduleList)):
-		for j in range(0, len(scheduleList[i])):
-			print(scheduleList[i][j].name, end = " ")
-		print()
+def printScheduleList(scheduleList, numClasses):
+	if numClasses == 0:
+		for i in range(0, len(scheduleList)):
+			for j in range(0, len(scheduleList[i])):
+				print(scheduleList[i][j].name, end = " ")
+			print()
+	else:
+		for i in range(0, len(scheduleList)):
+			if len(scheduleList[i]) == numClasses:
+				for j in range(0, len(scheduleList[i])):
+					print(scheduleList[i][j].name, end = " ")
+				print()
 
 def generateSchedules(scheduleList, classList):
 	i = 0
