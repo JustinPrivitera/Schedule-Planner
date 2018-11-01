@@ -1,5 +1,6 @@
 # Schedule-Planner
 A replacement for PASS.
+INCOMPLETE
 
 run with the following command: "python3 main.py inFile"
 
