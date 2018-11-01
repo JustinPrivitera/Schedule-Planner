@@ -9,7 +9,7 @@ def merge_sort(alist):
 		j = 0
 		k = 0
 		while i < len(left) and j < len(right):
-			if left[i] < right[j]:
+			if left[i].index < right[j].index:
 				alist[k] = left[i]
 				i += 1
 			else:
@@ -24,3 +24,4 @@ def merge_sort(alist):
 			alist[k] = right[j]
 			j += 1
 			k += 1
+	return alist

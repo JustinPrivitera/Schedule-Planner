@@ -1,18 +1,6 @@
-# <date>
-# Justin Privitera
-# <name>
-# <version>
-#
-# Version History:
-# <dates, versions, and descriptions>
-#
-# <Purpose>
-#
-# <Instructions>
-
-import sys
-
-from StringToken import stringToken
+from setup import *
+from time import *
+from node import *
 from MergeSort import merge_sort
 
 #def scheduler(inFile, outFile):
@@ -25,51 +13,27 @@ def scheduler(inFile):
 	classList = convertTimesToInts(parse(fileText))
 	scheduleList = generateSchedules(fillScheduleWithClassList(classList), classList)
 
-	timeList = getTimeList(classList)
+	printScheduleList(scheduleList)
 
+	#timeList = getTimeList(classList)
 
 	#outputFile.write(stuff)
 	#outputFile.close()
 
-def parse(fileText):
-	dataList = stringToken(fileText, "\n\t")
-	classList = [][]
-	j = 0
-	i = 0
-	while i < len(dataList): # populates the array
-		classList[j].append([dataList[i], dataList[i + 1], dataList[i + 2]])
-		i += 3
-		j += 1
-	return classList
-
-def getTimeList(classList):
-	timeList = [][]
-	for i in range(0, len(classList)):
-		timeList[i] = getNumbersBetween(classList[i][1], classList[i][2])
-	return timeList
-
-def getNumbersBetween(upper, lower): # not needed for computation, but needed for display
-	numList = []
-	i = lower
-	while i <= upper:
-		 numList.append(i)
-		 i += 1
-	return numList
-
-def convertTimesToInts(classList):
-	for i in range(0, len(classList)):
-		classList[i][1] = int(classList[i][1])
-		classList[i][2] = int(classList[i][2])
-	return classList
-
 def fillScheduleWithClassList(classList):
-	scheduleList = [][]
+	scheduleList = []
 	for i in range(0, len(classList)):
-		node = node(classList[i][0], i)
-		scheduleList.append([node])
+		newnode = node(classList[i][0], i)
+		scheduleList.append([newnode])
 	return scheduleList
 
-def generateSchedules(scheduleList, classList): # this is messed up
+def printScheduleList(scheduleList):
+	for i in range(0, len(scheduleList)):
+		for j in range(0, len(scheduleList[i])):
+			print(scheduleList[i][j].name, end = " ")
+		print()
+
+def generateSchedules(scheduleList, classList):
 	i = 0
 	while i < len(scheduleList):
 		j = i + 1
@@ -80,8 +44,8 @@ def generateSchedules(scheduleList, classList): # this is messed up
 		i += 1
 	return removeDuplicates(scheduleList)
 
-def checkLists(list1, list2, classList): # the lists are lists of nodes
-	if checkDuplicates(list1, list2) == 1:
+def checkLists(list1, list2, classList): # the lists are lists of nodes; returns a 1 if there are no conflicts or duplicates, returns a 0 if there is a conflict or duplicate
+	if checkDuplicates(list1, list2) == 1: # if there are no duplicates
 		i = 0
 		j = 0
 		while i < len(list1):
@@ -96,13 +60,12 @@ def checkLists(list1, list2, classList): # the lists are lists of nodes
 	else:
 		return 0
 
-def checkDuplicates(list1, list2):
+def checkDuplicates(list1, list2): # returns 0 if there is a duplicate and 1 if there are none
 	i = 0
-	j = 0
 	while i < len(list1):
 		j = 0
 		while j < len(list2):
-			if nodeCompare(list1[i], list2[j]) == 1:
+			if nodeCompare(list1[i], list2[j]) == 1: # if the nodes are the same
 				return 0
 			else:
 				j += 1
@@ -127,27 +90,15 @@ def removeDuplicates(scheduleList):
 	while i < len(scheduleList):
 		j = i + 1
 		while j < len(scheduleList):
-
-
-class node:
-	def __init__(self, name, index):
-		self.name = name
-		self.index = index
-
-	def getName(self):
-		return self.name
-
-	def getIndex(self):
-		return self.index
-
-	def setName(self, newname):
-		self.name = newname
-
-	def setIndex(self, newindex):
-		self.index = newindex
-
-def nodeCompare(node1, node2):
-	if node1.name == node2.name and node1.index == node2.index:
-		return 1
-	else:
-		return 0
+			if len(scheduleList[i]) == len(scheduleList[j]):
+				diff = False
+				for k in range(0, len(scheduleList[i])):
+					if nodeCompare(scheduleList[i][k], scheduleList[j][k]) == 0:
+						diff = True
+						break
+				if diff == False:
+					del scheduleList[j]
+					j -= 1
+			j += 1
+		i += 1
+	return scheduleList
