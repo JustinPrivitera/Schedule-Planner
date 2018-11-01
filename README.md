@@ -2,11 +2,11 @@
 A replacement for PASS.
 INCOMPLETE
 
-run with the following command: "python3 main.py <inFile> <numClasses>"
+run with the following command: "python3 main.py <numClasses> <inFile>"
 both of the parameters are optional
 
 --------
-let's make ^s be ANDs and #s be ORs for inFile syntax
+let's make '^'s be 'AND's and '#'s be 'OR's for inFile syntax
 
 --------
 in inFile, separate imperatives with '#'. Separate all other information with tabs and newlines. example:

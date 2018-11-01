@@ -1,11 +1,13 @@
 # 11/01/2018
 # Justin Privitera
 # Schedule Planner
-# v1.1
+# v1.2
 #
 # Version History:
 # 10/31/2018	v1.0	added basic functionality
 # 11/01/2018	v1.1	updated command line args so that they are optional; additionally added a feauture so that the user can limit the results by choosing a number of classes to view
+# 11/01/2018	v1.2	added ability to curate further by putting in the inFile a certain imperative class such that all results must contain that class.
+#						further added to this feature by allowing the user to choose one class or another to apply the feature to
 #
 # The purpose is to replace PASS with a superior scheduling applet, with greater functionality and options.
 #
