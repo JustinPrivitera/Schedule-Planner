@@ -27,3 +27,7 @@ def contains(list1, list2): # list1 is a list of nodes, list2 is a list of names
 			if list1[i].name == list2[j]:
 				return True
 	return False
+
+# def containsOne(list1, list2):
+
+# def containsAll(list1, list2):
