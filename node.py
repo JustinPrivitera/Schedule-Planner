@@ -28,8 +28,8 @@ def containsOne(list1, list2): # list1 is a list of nodes, list2 is a list of na
 				return True
 	return False
 
-def containsAll(list1, list2):
+def containsAll(list1, list2): # the functional replacement for containsOne, since containsOne could only handle OR logic, while I need AND
 	for i in range(0, len(list2)):
-		if not containsOne(list1, [list2[i]]):
+		if not containsOne(list1, [list2[i]]): # still uses containsOne
 			return False
 	return True

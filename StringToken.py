@@ -22,7 +22,7 @@
 #
 # At the end of the file are two simple tests with input and output
 
-def stringToken(line, spliterator, mode = 's'): #mode 's' = standard, mode 'f' = full
+def stringToken(line, spliterator, mode = 's'): # mode 's' = standard, mode 'f' = full
 
 	splitTokens = list(spliterator)
 	wordList = []
