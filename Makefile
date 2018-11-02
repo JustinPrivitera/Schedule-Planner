@@ -12,6 +12,12 @@ git:
 	git commit -m "committed with make git"
 	git push
 
+view:
+	subl main.py
+	subl Scheduler.py
+	subl node.py
+	subl setup.py
+
 clean:
 	rm -rf __pycache__
 	rm -f outFile
