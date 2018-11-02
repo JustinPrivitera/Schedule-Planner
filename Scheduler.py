@@ -4,23 +4,23 @@ from node import *
 from MergeSort import merge_sort
 
 #def scheduler(inFile, outFile):
-def scheduler(numClasses = 0, inFile = "inFile"):
+def scheduler(numClasses = 0, inFile = "inFile", outFile = "outFile"):
 	inputFile = open(inFile, "r")
 	fileText = inputFile.read()
 	inputFile.close()
-	#outputFile = open(outFile, "w")
+	outputFile = open(outFile, "w")
 
 	initClassList = parse(fileText)
 	imperativeList = initClassList[1]
 	classList = convertTimesToInts(initClassList[0])
 	scheduleList = generateSchedules(fillScheduleWithClassList(classList), classList)
 
-	printScheduleList(scheduleList, numClasses, imperativeList)
+	# printScheduleList(scheduleList, numClasses, imperativeList)
+	writeScheduleList(scheduleList, numClasses, imperativeList, outputFile)
 
 	#timeList = getTimeList(classList)
 
-	#outputFile.write(stuff)
-	#outputFile.close()
+	outputFile.close()
 
 def fillScheduleWithClassList(classList):
 	scheduleList = []
@@ -36,6 +36,14 @@ def printScheduleList(scheduleList, numClasses, imperativeList):
 				for j in range(0, len(scheduleList[i])):
 					print(scheduleList[i][j].name, end = " ")
 				print()
+
+def writeScheduleList(scheduleList, numClasses, imperativeList, outputFile):
+	for i in range(0, len(scheduleList)):
+		if numClasses == 0 or len(scheduleList[i]) == numClasses:
+			if containsAll(scheduleList[i], imperativeList) or len(imperativeList) == 0:
+				for j in range(0, len(scheduleList[i])):
+					outputFile.write(scheduleList[i][j].name + " ")
+				outputFile.write("\n")
 
 def generateSchedules(scheduleList, classList):
 	i = 0
