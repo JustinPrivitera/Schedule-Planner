@@ -9,8 +9,12 @@ git:
 	make clean
 	git status
 	git add -A
-	git commit -m "made changes"
+	git commit -m "committed with make git"
 	git push
+
+pull:
+	make clean
+	git pull
 
 clean:
 	rm -rf __pycache__
