@@ -20,5 +20,4 @@ still need to add:
 	- days of the week, and thus a much more complicated time scheme
 	- a method of putting in classes as either/or - this could be accomplished by simply limiting the output to the number of classes one wishes to take
 	- format the results in a way that is conducive to schedule planning
-		- you can choose a class or classes to be imperative, meaning that only schedules containing that class can be displayed
 	- printScheduleList() needs to be redone, probably build a large string before printing
