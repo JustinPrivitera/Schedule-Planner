@@ -21,13 +21,15 @@ def nodeCompare(node1, node2): # returns 1 if the nodes are the same and 0 if th
 	else:
 		return 0
 
-def contains(list1, list2): # list1 is a list of nodes, list2 is a list of names
+def containsOne(list1, list2): # list1 is a list of nodes, list2 is a list of names
 	for i in range(0, len(list1)):
 		for j in range(0, len(list2)):
 			if list1[i].name == list2[j]:
 				return True
 	return False
 
-# def containsOne(list1, list2):
-
-# def containsAll(list1, list2):
+def containsAll(list1, list2):
+	for i in range(0, len(list2)):
+		if not containsOne(list1, [list2[i]]):
+			return False
+	return True

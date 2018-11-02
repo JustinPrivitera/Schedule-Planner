@@ -32,7 +32,7 @@ def fillScheduleWithClassList(classList):
 def printScheduleList(scheduleList, numClasses, imperativeList):
 	for i in range(0, len(scheduleList)):
 		if numClasses == 0 or len(scheduleList[i]) == numClasses:
-			if contains(scheduleList[i], imperativeList) or len(imperativeList) == 0:
+			if containsOne(scheduleList[i], imperativeList) or len(imperativeList) == 0:
 				for j in range(0, len(scheduleList[i])):
 					print(scheduleList[i][j].name, end = " ")
 				print()
