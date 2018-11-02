@@ -12,10 +12,6 @@ git:
 	git commit -m "committed with make git"
 	git push
 
-pull:
-	make clean
-	git pull
-
 clean:
 	rm -rf __pycache__
 	rm -f outFile
