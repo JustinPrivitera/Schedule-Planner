@@ -2,7 +2,7 @@
 A replacement for PASS.
 INCOMPLETE
 
-run with the following command: "python3 main.py {numClasses} {inFile}"
+run with the following command: "python3 main.py {numClasses} {inFile}" or "make" or "make run"
 both of the parameters are optional
 
 --------

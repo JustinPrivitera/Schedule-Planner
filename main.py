@@ -12,7 +12,7 @@
 #
 # The purpose is to replace PASS with a superior scheduling applet, with greater functionality and options.
 #
-# run the program with the following command: "python3 main.py"
+# run the program with the following command: "python3 main.py" or "make" or "make run"
 
 import sys
 
