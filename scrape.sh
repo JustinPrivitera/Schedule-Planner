@@ -7,7 +7,8 @@ mkdir -p happydatabase
 python3 coursegen.py > happydatabase/courseurls.txt
 
 cd happydatabase
-cat courseurls.txt | sed -r 's;(http://schedules.calpoly.edu/classes_)(...-[0-9][0-9][0-9])(_next.htm);wget -O \2.htm "\1\2\3";' | bash
+cat courseurls.txt | sed -r 's;(http://schedules.calpoly.edu/classes_)(...-[0-9][0-9][0-9])(_next.htm);wget -O \2.htm "\1\2\3";' | tee coursescript.sh
+source coursescript.sh
 find . -size 0 -delete
 ls *.htm | xargs python ../html2csv.py
 
