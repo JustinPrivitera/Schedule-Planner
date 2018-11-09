@@ -5,11 +5,15 @@ run:
 	python3 main.py
 	cat outFile
 
+run2:
+	python3 main.py 0 inFile2
+	cat outFile	
+
 git:
 	make clean
 	git status
 	git add -A
-	git commit -m "committed with make git"
+	git commit -m "added preliminary logic functionality"
 	git push
 
 open:
