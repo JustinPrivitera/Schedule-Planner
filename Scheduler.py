@@ -2,6 +2,7 @@ from setup import *
 from time import *
 from node import *
 from MergeSort import merge_sort
+from logic import logic
 
 #def scheduler(inFile, outFile):
 def scheduler(numClasses = 0, inFile = "inFile", outFile = "outFile"):
@@ -21,6 +22,9 @@ def scheduler(numClasses = 0, inFile = "inFile", outFile = "outFile"):
 	#timeList = getTimeList(classList)
 
 	outputFile.close()
+
+	logic()
+	print()
 
 def fillScheduleWithClassList(classList):
 	scheduleList = []

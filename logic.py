@@ -53,6 +53,8 @@ def concatenateStatements(logicText): # transforms logicText from a list of stat
 
 def printSchedules(fileText):
 	fileText = "\n".join(fileText)
+	if fileText == "":
+		print("No schedules match the given criteria.")
 	print(fileText)
 
 def testValidity():
@@ -64,18 +66,14 @@ def funcUnitEval(logicStatement, fileText):
 		return translate(applyImperative(logicStatement[0], fileText))
 	else:
 		op = logicStatement[opIndex]
-		# test left
-		if logicStatement[opIndex - 1] != ")":
-			op1 = applyImperative(logicStatement[opIndex - 1], fileText) # operand 1 is a trimmed list containing only elements which contain the imperative class
-		else:
-			op1 = funcUnitEval(logicStatement[0 : opIndex], fileText)
-		# test right
-		if logicStatement[opIndex + 1] != "(":
-			op2 = applyImperative(logicStatement[opIndex + 1], fileText) # operand 2 is a trimmed list containing only elements which contain the imperative class
-		else:
-			op2 = funcUnitEval(logicStatement[opIndex + 1 : len(logicStatement - 1)], fileText)
-		# evaluate
+		op1 = encode(funcUnitEval(filterParentheses(logicStatement[0 : opIndex]), fileText))
+		op2 = encode(funcUnitEval(filterParentheses(logicStatement[opIndex + 1 : len(logicStatement)]), fileText))
 		return evaluate(op1, op, op2)
+
+def filterParentheses(logicStatement):
+	if logicStatement[0] == "(" and logicStatement[len(logicStatement) - 1] == ")":
+		return logicStatement[1 : len(logicStatement) - 1]
+	return logicStatement
 
 def evaluate(op1, op, op2): # translaton will be a problem
 	op1 = translate(op1)
@@ -117,23 +115,31 @@ def removeDuplicates(alist):
 	return alist
 
 def translate(classList):
-	for i in range(0, len(classList)):
-		classList[i] = " ".join(classList[i])
-	return classList
+	if isinstance(classList[0], list):
+		for i in range(0, len(classList)):
+			classList[i] = " ".join(classList[i])
+			# print(classList[i])
+		return classList
+	else:
+		return classList
 
 def encode(classList):
-	pass
+	for i in range(0, len(classList)):
+		classList[i] = stringToken(classList[i], " ")
+		# print(classList[i][0])
+	return classList
 
 def applyImperative(filterClass, classList): # removes all elements that do not contain the desired class
 	i = 0
-	length = len(classList)
+	newList = classList.copy()
+	length = len(newList)
 	while i < length:
-		if contains(filterClass, classList[i]) == False:
-			del classList[i]
+		if contains(filterClass, newList[i]) == False:
+			del newList[i]
 			length -= 1
 			i -= 1
 		i += 1
-	return classList
+	return newList
 
 def contains(filterClass, classList):
 	for i in range(0, len(classList)):

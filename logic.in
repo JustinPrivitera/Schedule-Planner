@@ -1,1 +1,1 @@
-class1 & class2
+((class1 | class2) & class4) | (class1 & class3)
