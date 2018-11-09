@@ -1,5 +1,4 @@
 from StringToken import stringToken
-from Stack import *
 
 def logic(logicFile = "logic.in", classFile = "outFile", finalOutFile = "finalOutFile"):
 	# I should implement this so it can output to a file
@@ -7,10 +6,7 @@ def logic(logicFile = "logic.in", classFile = "outFile", finalOutFile = "finalOu
 	fileText = classFileParser(classFile)
 
 	# filter schedules
-	# for i in range(0, len(logicText)):
-	# 	if len(logicText[i]) == 1:
-	# 		fileText = applyImperative(logicText[i][0], fileText)
-	# all other cases must still be added
+	fileText = funcUnitEval(concatenateStatements(logicText), fileText)
 
 	printSchedules(fileText)
 
@@ -30,7 +26,7 @@ def classFileParser(classFile): # parse schedule list
 		fileText[i] = stringToken(fileText[i], " ")
 	return fileText
 
-def concatenateStatements(logicText): # transforms logicText from a list of statements to one huge statement
+def concatenateStatements(logicText): # transforms logicText from a list of statements to one huge statement (2d to 1d list)
 	for i in range(0, len(logicText)):
 		if len(logicText[i]) > 1:
 			logicText[i].insert(0, "(")
@@ -61,46 +57,33 @@ def contains(filterClass, classList):
 	return False
 
 def printSchedules(fileText):
-	for i in range(0, len(fileText)):
-		fileText[i] = " ".join(fileText[i])
-	print("\n".join(fileText))
+	fileText = "\n".join(fileText)
+	print(fileText)
 
 def testValidity():
 	pass
 
-def applyLogic(logicText, fileText): # both are 2d lists
-	pass
-
-	#--------forget the below--------
-	# for each logical statement of logicText
-	# for i in range(0, len(fileText)):
-		# I think if there's only one thing in the list then we can apply much simpler logic
-		# for each functional unit of the logical statement
-			# for every element of the functional unit
-			# count = countOperands(logicText[j])
-			# for k in range(0, count):
-				# I want to run it as an imperative against the classlist, creating a result as a 1-dimensional list
-			# then I want to compare each output of the functional unit to it's corresponding operand output, applying logic as necessary to either limit or expand the output
-			# or the other case is that there is only one operand
-		# then I want to save the results, probably as a 2d list again
-
 def funcUnitEval(logicStatement, fileText):
 	opIndex = indexOfUnboundedOperator(logicStatement)
-	op = logicStatement[opIndex]
-	# test left
-	if logicStatement[opIndex - 1] != ")":
-		op1 = applyImperative(logicStatement[opIndex - 1], fileText) # operand 1 is a trimmed list containing only elements which contain the imperative class
+	if opIndex == -1:
+		return translate(applyImperative(logicStatement[0], fileText))
 	else:
-		op1 = funcUnitEval(logicStatement[0 : opIndex])
-	# test right
-	if logicStatement[opIndex + 1] != "(":
-		op2 = applyImperative(logicStatement[opIndex + 1], fileText) # operand 2 is a trimmed list containing only elements which contain the imperative class
-	else:
-		op2 = funcUnitEval(logicStatement[opIndex + 1 : len(logicStatement - 1)])
-	# evaluate
-	return evaluate(op1, op, op2)
+		op = logicStatement[opIndex]
+		# test left
+		print(opIndex)
+		if logicStatement[opIndex - 1] != ")":
+			op1 = applyImperative(logicStatement[opIndex - 1], fileText) # operand 1 is a trimmed list containing only elements which contain the imperative class
+		else:
+			op1 = funcUnitEval(logicStatement[0 : opIndex])
+		# test right
+		if logicStatement[opIndex + 1] != "(":
+			op2 = applyImperative(logicStatement[opIndex + 1], fileText) # operand 2 is a trimmed list containing only elements which contain the imperative class
+		else:
+			op2 = funcUnitEval(logicStatement[opIndex + 1 : len(logicStatement - 1)])
+		# evaluate
+		return evaluate(op1, op, op2)
 
-def evaluate(op1, op, op2):
+def evaluate(op1, op, op2): # translaton will be a problem
 	op1 = translate(op1)
 	op2 = translate(op2)
 	if op == "&":
@@ -124,9 +107,28 @@ def evalOr(cList1, cList2): # the parameters are 1 dimentsional lists, since the
 	rList.extend(cList2)
 	return removeDuplicates(rList)
 
+def removeDuplicates(alist):
+	i = 0
+	length = len(alist)
+	while i < length:
+		j = i + 1
+		while j < length:
+			if alist[i] == alist[j]:
+				del alist[i]
+				i -= 1
+				length -= 1
+				break
+			j += 1
+		i += 1
+	return alist
+
 def translate(classList):
 	for i in range(0, len(classList)):
 		classList[i] = " ".join(classList[i])
+	return classList
+
+def encode(classList):
+	pass
 
 def applyImperative(filterClass, classList): # removes all elements that do not contain the desired class
 	i = 0
@@ -149,10 +151,3 @@ def indexOfUnboundedOperator(logicStatement): # logicStatement is a list of logi
 		if parenCount == 0 and (logicStatement[i] == "&" or logicStatement[i] == "|"):
 			return i
 	return -1
-
-# def countOperands(logicStatement):
-# 	count = 0
-# 	for i in range(0, logicStatement):
-# 		if logicStatement[i] != "(" or logicStatement[i] != ")" or logicStatement[i] != "&" or logicStatement[i] != "|":
-# 			count += 1
-# 	return count
