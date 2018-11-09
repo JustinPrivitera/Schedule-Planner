@@ -3,7 +3,7 @@ class Stack:
 	def __init__(self, capacity):
 		self.num_items = 0
 		self.capacity = capacity
-		self.items = [None]*capacity
+		self.items = [None] * capacity
 
 	def push(self, item):
 		if self.is_full():

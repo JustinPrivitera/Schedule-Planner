@@ -29,6 +29,7 @@ open:
 	subl node.py
 	subl setup.py
 	subl README.md
+	subl logic.py
 
 clean:
 	rm -rf __pycache__
