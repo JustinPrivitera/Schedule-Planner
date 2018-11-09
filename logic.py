@@ -9,7 +9,7 @@ def logic(logicFile = "logic.in", classFile = "outFile", finalOutFile = "finalOu
 	# filter schedules
 	# for i in range(0, len(logicText)):
 	# 	if len(logicText[i]) == 1:
-	# 		fileText = filterOne(logicText[i][0], fileText)
+	# 		fileText = applyImperative(logicText[i][0], fileText)
 	# all other cases must still be added
 
 	printSchedules(fileText)
@@ -54,17 +54,6 @@ def concatenateStatements(logicText): # transforms logicText from a list of stat
 				newText.extend(logicText[i])
 	return newText
 
-# def filterOne(filterClass, fileText): # removes all elements that do not contain the desired class
-# 	i = 0
-# 	length = len(fileText)
-# 	while i < length:
-# 		if contains(filterClass, fileText[i]) == False:
-# 			del fileText[i]
-# 			length -= 1
-# 			i -= 1
-# 		i += 1
-# 	return fileText
-
 def contains(filterClass, classList):
 	for i in range(0, len(classList)):
 		if classList[i] == filterClass:
@@ -95,6 +84,61 @@ def applyLogic(logicText, fileText): # both are 2d lists
 			# or the other case is that there is only one operand
 		# then I want to save the results, probably as a 2d list again
 
+def funcUnitEval(logicStatement, fileText):
+	opIndex = indexOfUnboundedOperator(logicStatement)
+	op = logicStatement[opIndex]
+	# test left
+	if logicStatement[opIndex - 1] != ")":
+		op1 = applyImperative(logicStatement[opIndex - 1], fileText) # operand 1 is a trimmed list containing only elements which contain the imperative class
+	else:
+		op1 = funcUnitEval(logicStatement[0 : opIndex])
+	# test right
+	if logicStatement[opIndex + 1] != "(":
+		op2 = applyImperative(logicStatement[opIndex + 1], fileText) # operand 2 is a trimmed list containing only elements which contain the imperative class
+	else:
+		op2 = funcUnitEval(logicStatement[opIndex + 1 : len(logicStatement - 1)])
+	# evaluate
+	return evaluate(op1, op, op2)
+
+def evaluate(op1, op, op2):
+	op1 = translate(op1)
+	op2 = translate(op2)
+	if op == "&":
+		return evalAnd(op1, op2)
+	if op == "|":
+		return evalOr(op1, op2)
+	return []
+
+def evalAnd(cList1, cList2): # the parameters are 1 dimentsional lists, since the 2nd dimension was turned into strings
+	rList = []
+	for i in range(0, len(cList1)):
+		for j in range(0, len(cList2)):
+			if cList1[i] == cList2[j]:
+				rList.append(cList1[i])
+				break
+	return rList
+
+def evalOr(cList1, cList2): # the parameters are 1 dimentsional lists, since the 2nd dimension was turned into strings
+	rList = []
+	rList.extend(cList1)
+	rList.extend(cList2)
+	return removeDuplicates(rList)
+
+def translate(classList):
+	for i in range(0, len(classList)):
+		classList[i] = " ".join(classList[i])
+
+def applyImperative(filterClass, classList): # removes all elements that do not contain the desired class
+	i = 0
+	length = len(classList)
+	while i < length:
+		if contains(filterClass, classList[i]) == False:
+			del classList[i]
+			length -= 1
+			i -= 1
+		i += 1
+	return classList
+
 def indexOfUnboundedOperator(logicStatement): # logicStatement is a list of logical operands, operators, and parentheses
 	parenCount = 0
 	for i in range(0, len(logicStatement)):
@@ -102,7 +146,7 @@ def indexOfUnboundedOperator(logicStatement): # logicStatement is a list of logi
 			parenCount += 1
 		elif logicStatement[i] == ")":
 			parenCount -= 1
-		if ___:
+		if parenCount == 0 and (logicStatement[i] == "&" or logicStatement[i] == "|"):
 			return i
 	return -1
 
