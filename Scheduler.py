@@ -24,7 +24,8 @@ def scheduler(numClasses = 0, inFile = "inFile", outFile = "outFile"):
 	outputFile.close()
 
 	logic()
-	print()
+
+	# need to add further delimiter, as in the number of classes
 
 def fillScheduleWithClassList(classList):
 	scheduleList = []

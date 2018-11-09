@@ -1,6 +1,6 @@
 from StringToken import stringToken
 
-def logic(logicFile = "logic.in", classFile = "outFile", finalOutFile = "finalOutFile"):
+def logic(logicFile = "logic.in", classFile = "outFile", finalOutFile = "outFile"):
 	# I should implement this so it can output to a file
 	logicText = logicFileParser(logicFile)
 	fileText = classFileParser(classFile)
@@ -8,7 +8,12 @@ def logic(logicFile = "logic.in", classFile = "outFile", finalOutFile = "finalOu
 	# filter schedules
 	fileText = funcUnitEval(concatenateStatements(logicText), fileText)
 
-	printSchedules(fileText)
+	outputFile = open(finalOutFile, "w")
+
+	# printSchedules(fileText)
+	writeSchedules(fileText, outputFile)
+
+	outputFile.close()
 
 def logicFileParser(logicFile): # parse logic
 	inputFile = open(logicFile, "r")
@@ -56,6 +61,13 @@ def printSchedules(fileText):
 	if fileText == "":
 		print("No schedules match the given criteria.")
 	print(fileText)
+
+def writeSchedules(fileText, outputFile):
+	fileText = "\n".join(fileText)
+	if fileText == "":
+		outputFile.write("No schedules match the given criteria.")
+	outputFile.write(fileText)
+	outputFile.write("\n")
 
 def testValidity():
 	pass
