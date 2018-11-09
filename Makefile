@@ -13,7 +13,14 @@ git:
 	make clean
 	git status
 	git add -A
-	git commit -m "added preliminary logic functionality"
+	git commit -m "committed with make git"
+	git push
+
+gitl:
+	make clean
+	git status
+	git add -A
+	git commit -m "made changes to logic functionality"
 	git push
 
 open:
