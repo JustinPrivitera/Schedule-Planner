@@ -27,10 +27,11 @@ def classFileParser(classFile): # parse schedule list
 	return fileText
 
 def concatenateStatements(logicText): # transforms logicText from a list of statements to one huge statement (2d to 1d list)
-	for i in range(0, len(logicText)):
-		if len(logicText[i]) > 1:
-			logicText[i].insert(0, "(")
-			logicText[i].append(")")
+	if len(logicText) > 1:
+		for i in range(0, len(logicText)):
+			if len(logicText[i]) > 1:
+				logicText[i].insert(0, "(")
+				logicText[i].append(")")
 	newText = []
 	# 3 cases
 	# case (i): there is only one statement
@@ -50,12 +51,6 @@ def concatenateStatements(logicText): # transforms logicText from a list of stat
 				newText.extend(logicText[i])
 	return newText
 
-def contains(filterClass, classList):
-	for i in range(0, len(classList)):
-		if classList[i] == filterClass:
-			return True
-	return False
-
 def printSchedules(fileText):
 	fileText = "\n".join(fileText)
 	print(fileText)
@@ -70,16 +65,15 @@ def funcUnitEval(logicStatement, fileText):
 	else:
 		op = logicStatement[opIndex]
 		# test left
-		print(opIndex)
 		if logicStatement[opIndex - 1] != ")":
 			op1 = applyImperative(logicStatement[opIndex - 1], fileText) # operand 1 is a trimmed list containing only elements which contain the imperative class
 		else:
-			op1 = funcUnitEval(logicStatement[0 : opIndex])
+			op1 = funcUnitEval(logicStatement[0 : opIndex], fileText)
 		# test right
 		if logicStatement[opIndex + 1] != "(":
 			op2 = applyImperative(logicStatement[opIndex + 1], fileText) # operand 2 is a trimmed list containing only elements which contain the imperative class
 		else:
-			op2 = funcUnitEval(logicStatement[opIndex + 1 : len(logicStatement - 1)])
+			op2 = funcUnitEval(logicStatement[opIndex + 1 : len(logicStatement - 1)], fileText)
 		# evaluate
 		return evaluate(op1, op, op2)
 
@@ -140,6 +134,12 @@ def applyImperative(filterClass, classList): # removes all elements that do not 
 			i -= 1
 		i += 1
 	return classList
+
+def contains(filterClass, classList):
+	for i in range(0, len(classList)):
+		if classList[i] == filterClass:
+			return True
+	return False
 
 def indexOfUnboundedOperator(logicStatement): # logicStatement is a list of logical operands, operators, and parentheses
 	parenCount = 0

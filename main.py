@@ -31,4 +31,4 @@ else:
 
 logic()
 
-print("\n\n")
+print("\n")
