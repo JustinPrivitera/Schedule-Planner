@@ -17,7 +17,7 @@
 import sys
 
 from Scheduler import scheduler
-from logic import logicParser
+from logic import logic
 
 if len(sys.argv) > 3:
 	print("Too many parameters supplied")
@@ -29,6 +29,6 @@ elif len(sys.argv) >= 2:
 else:
 	scheduler()
 
-logicParser()
+logic()
 
 print("\n\n")
