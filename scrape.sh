@@ -24,5 +24,7 @@ ls *.htm | xargs -L 1 python ../html2csv.py > /dev/null
 wait
 # echo "Here are the availible courses:"
 # cat *.csv | xargs -L 1 echo | python3 ../ezsplit.py 
+ 
+cat happydatabase/*.csv | xargs -L 1 echo | python3 linerearrange.py | tee hijustin.in
 wait
 
