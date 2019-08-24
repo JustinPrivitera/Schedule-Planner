@@ -23,7 +23,7 @@ def scheduler(numClasses = 0, inFile = "inFile", outFile = "outFile"):
 
 	outputFile.close()
 
-	# logic()
+	logic()
 
 	# need to add further delimiter, as in the number of classes
 
